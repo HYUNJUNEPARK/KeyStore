@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.june.keystore.databinding.ActivityMainBinding
-import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
@@ -15,10 +14,11 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val KEYSTORE_ALIAS = "mKey"
         const val KEYSTORE_TYPE = "AndroidKeyStore"
+
     }
 
-    private var secretKey : SecretKey? = null
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private var secretKey : SecretKey? = null
 
     private lateinit var iv: ByteArray
 
@@ -30,34 +30,42 @@ class MainActivity : AppCompatActivity() {
         //TODO 왜 16 ???????????
         iv = ByteArray(16)
 
-        initIsKeyView()
+
+
+        initKeyView()
     }
 
     fun keyGenButtonClicked(v: View) {
         try {
             secretKey = KeyUtil().secretKeyGen()
+
+            //iv
+            //initIV()
+
             Toast.makeText(this, "키 생성", Toast.LENGTH_SHORT).show()
         }
         catch (e: Exception) {
             Toast.makeText(this, "키 생성 실패", Toast.LENGTH_SHORT).show()
         }
-        initIsKeyView()
+        initKeyView()
     }
 
     fun keyLoadButtonClicked(v: View) {
         secretKey = KeyUtil().secretKeyFromKeyStore()
-        initIsKeyView()
+        //iv
+        initKeyView()
     }
 
     fun keyStoreKeyDeleteButtonClicked(v: View) {
         KeyUtil().deleteKeyStoreSecretKey()
         secretKey = null
-        initIsKeyView()
+        //iv
+        initKeyView()
     }
 
     fun loadedKeyDeletedButtonClicked(v: View) {
         secretKey = null
-        initIsKeyView()
+        initKeyView()
     }
 
 
@@ -76,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun initIsKeyView() = with(binding) {
+    private fun initKeyView() = with(binding) {
         if (secretKey != null) {
             keyStateTextView.text = "Applied"
             appliedKeyDeleteButton.isEnabled = true
@@ -100,12 +108,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+//    private fun initIV() {
+//        val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+//        iv2 = cipher.iv
+//    }
+
     private fun encryption(userInput: String) {
         val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        //에러발생
-        //cipher_enc.init(Cipher.ENCRYPT_MODE, secretKey, IvParameterSpec(iv))
+        cipher.init(
+            Cipher.ENCRYPT_MODE,
+            secretKey
+        )
         iv = cipher.iv
+
+
         val byteEncryptedText = cipher.doFinal(userInput.toByteArray())
         binding.encryptionTextView.text = String(Base64.encode(byteEncryptedText, Base64.DEFAULT))
 
@@ -113,9 +130,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun decryption(byteEncryptedText: ByteArray) {
-        val cipher_dec = Cipher.getInstance("AES/CBC/PKCS7Padding")
-        cipher_dec.init(Cipher.DECRYPT_MODE, secretKey, IvParameterSpec(iv))
-        val byteDecryptedText = cipher_dec.doFinal(byteEncryptedText)
+        val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+        cipher.init(
+            Cipher.DECRYPT_MODE,
+            secretKey,
+            IvParameterSpec(iv)
+        )
+
+
+        val byteDecryptedText = cipher.doFinal(byteEncryptedText)
         binding.decryptionTextView.text = String(byteDecryptedText)
     }
 }

@@ -15,7 +15,7 @@ class KeyUtil {
     fun secretKeyGen(): SecretKey {
         val keyGenerator = KeyGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_AES,
-            MainActivity.KEYSTORE_TYPE
+            KEYSTORE_TYPE
         )
         val parameterSpec = KeyGenParameterSpec.Builder(
             MainActivity.KEYSTORE_ALIAS,
