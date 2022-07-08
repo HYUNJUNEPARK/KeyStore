@@ -2,6 +2,7 @@ package com.june.keystore
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import com.june.keystore.MainActivity.Companion.KEYSTORE_ALIAS
 import com.june.keystore.MainActivity.Companion.KEYSTORE_TYPE
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
@@ -18,7 +19,7 @@ class KeyUtil {
             KEYSTORE_TYPE
         )
         val parameterSpec = KeyGenParameterSpec.Builder(
-            MainActivity.KEYSTORE_ALIAS,
+            KEYSTORE_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         ).run {
             setBlockModes(KeyProperties.BLOCK_MODE_CBC)
@@ -33,12 +34,12 @@ class KeyUtil {
     }
 
     fun secretKeyFromKeyStore(): SecretKey {
-        val secretKeyEntry = keyStore.getEntry(MainActivity.KEYSTORE_ALIAS, null) as KeyStore.SecretKeyEntry
+        val secretKeyEntry = keyStore.getEntry(KEYSTORE_ALIAS, null) as KeyStore.SecretKeyEntry
         val secretKey = secretKeyEntry.secretKey
         return secretKey
     }
 
     fun deleteKeyStoreSecretKey() {
-        keyStore.deleteEntry(MainActivity.KEYSTORE_ALIAS)
+        keyStore.deleteEntry(KEYSTORE_ALIAS)
     }
 }

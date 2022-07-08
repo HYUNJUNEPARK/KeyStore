@@ -187,19 +187,6 @@
             android:layout_marginBottom="7dp"
             android:background="#989393" />
 
-        <ImageButton
-            android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_key_24"
-            android:onClick="button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/button2"
-            android:onClick="button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -220,46 +207,7 @@
             android:layout_marginBottom="7dp"
             android:background="#989393" />
 
-        <Button
-            android:id="@+id/button1"
-            android:onClick="button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
 
     </LinearLayout>
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/keyGenButton"-->
-    <!--        android:layout_width="50dp"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:background="#2196F3"-->
-    <!--        android:onClick="keyGenButtonClicked"-->
-    <!--        android:src="@drawable/ic_baseline_key_24"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/keyGenText"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="KeyGen"-->
-    <!--        android:textColor="@color/black"-->
-    <!--        android:textSize="14sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/keyGenButton"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/keyGenButton"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/keyGenButton" />-->
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/keyLoadButton"-->
-    <!--        android:layout_width="50dp"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/keyGenButton"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:background="#673AB7"-->
-    <!--        android:onClick="keyLoadButtonClicked"-->
-    <!--        android:src="@drawable/ic_baseline_key_24" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
