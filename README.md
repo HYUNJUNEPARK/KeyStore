@@ -39,6 +39,8 @@ PKCS5Padding
 
 
 
+        //http://www.fun25.co.kr/blog/java-aes128-cbc-encrypt-decrypt-example
+
 
 초기화 벡터 위키백과
 https://ko.wikipedia.org/wiki/%EC%B4%88%EA%B8%B0%ED%99%94_%EB%B2%A1%ED%84%B0

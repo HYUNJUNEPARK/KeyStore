@@ -1,7 +1,9 @@
 package com.june.keystore
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,23 +16,23 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val KEYSTORE_ALIAS = "mKey"
         const val KEYSTORE_TYPE = "AndroidKeyStore"
-
+        var secretKey : SecretKey? = null
+        lateinit var iv: ByteArray
     }
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private var secretKey : SecretKey? = null
 
-    private lateinit var iv: ByteArray
+
+    lateinit var text: ByteArray
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //TODO 왜 16 ???????????
+
+
         iv = ByteArray(16)
-
-
 
         initKeyView()
     }
@@ -121,12 +123,9 @@ class MainActivity : AppCompatActivity() {
             secretKey
         )
         iv = cipher.iv
-
-
         val byteEncryptedText = cipher.doFinal(userInput.toByteArray())
         binding.encryptionTextView.text = String(Base64.encode(byteEncryptedText, Base64.DEFAULT))
-
-        decryption(byteEncryptedText)
+        //decryption(byteEncryptedText)
     }
 
     private fun decryption(byteEncryptedText: ByteArray) {
@@ -141,4 +140,39 @@ class MainActivity : AppCompatActivity() {
         val byteDecryptedText = cipher.doFinal(byteEncryptedText)
         binding.decryptionTextView.text = String(byteDecryptedText)
     }
+
+
+
+
+
+
+
+
+    fun button1(v: View) {
+        //http://www.fun25.co.kr/blog/java-aes128-cbc-encrypt-decrypt-example
+//        val userInput = binding.messageEditText.text.toString()
+//
+//        //val keySpec: Key = getAESKey()
+//        val iv = "0987654321654321"
+//        val c = Cipher.getInstance("AES/CBC/PKCS5Padding")
+//        c.init(
+//            Cipher.ENCRYPT_MODE,
+//            secretKey,
+//            IvParameterSpec(iv.toByteArray(charset("UTF-8")))
+//        )
+//        val encrypted = c.doFinal(userInput.toByteArray(charset("UTF-8")))
+//
+//        Log.d(TAG, "button1: $encrypted")
+
+        val userInput = binding.messageEditText.text.toString()
+        text = AESUtil().encryption(userInput)
+        Log.d("testLog", "button1: ${String(Base64.encode(text, Base64.DEFAULT))}")
+
+
+    }
+
+    fun button2(v: View) {
+        Log.d("testLog", "button2: ${AESUtil().decryption(text)}")
+    }
+
 }
